@@ -19,11 +19,15 @@ export function update(speed) {
 }
 
 export function draw(gameBoard) {
-    snakeBody.forEach(segment => {
+    snakeBody.forEach((segment, index) => {
         const snakeElement = document.createElement('div')
         snakeElement.style.gridRowStart = segment.y
         snakeElement.style.gridColumnStart = segment.x
-        snakeElement.classList.add('snake')
+        if (index % 2 == 0) {
+            snakeElement.classList.add('snake')
+        } else {
+            snakeElement.classList.add('snake2')
+        }
         gameBoard.appendChild(snakeElement)
     })
 }

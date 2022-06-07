@@ -54,12 +54,14 @@ p {
 
 .snake {
     background-color: #0074ff;
-    border: .25vmin solid black;
+}
+
+.snake2 {
+    background-color: #1496de;
 }
 
 .food {
     background-color: #e20000;
-    border: .25vmin solid black;
 }
 
 .switch {

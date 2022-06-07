@@ -1,7 +1,7 @@
 import { update as updateSnake, draw as drawSnake, SNAKE_SPEED, getSnakeHead, snakeIntersection, snakeRestart, tamanho } from "./snake.js"
 import { update as updateFood, draw as drawFood} from "./food.js"
 import { outsideGrid } from "./grid.js"
-import { getInputDirection, inputRestart } from "./input.js";
+import { getInputDirection, inputRestart, updateInput } from "./input.js";
 
 let lastRenderTime = 0
 let gameOver = false;
@@ -32,6 +32,7 @@ function update() {
     var speed = slider.value
     updateSnake(speed)
     updateFood()
+    updateInput()
     checkDeath()
     updateStatus()
 }
