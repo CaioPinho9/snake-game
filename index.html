@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="Perfil-Icone.ico" type="image/x-icom">
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="game.js" defer type="module"></script>
+</head>
+<body>
+    <div id = "menu">
+
+        <div id="manual">
+            <p>    Manual</p>
+            <label class="switch">
+                <input id="checkbox" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <p>Automatico</p>
+        </div>
+        <br>
+        <div id="velocidade">
+            <p id="mostrarVelocidade"> Velocidade</p>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="100" value="5" class="sliderRange" id="myRange">
+            </div>
+        </div>
+
+        <div id="game-board"></div>
+        <div id="status">
+            <p id="tamanho">Tamanho: </p>
+            <p id="passos">Passos: </p>
+        </div>
+        
+    </div>
+    
+
+</body>
+</html>
