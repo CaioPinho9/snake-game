@@ -33,8 +33,8 @@ function update() {
     updateSnake(speed)
     updateFood()
     updateInput()
-    checkDeath()
     updateStatus()
+    checkDeath()
 }
 
 function draw() {
@@ -46,8 +46,6 @@ function draw() {
 function checkDeath() {
     gameOver = outsideGrid(getSnakeHead()) || snakeIntersection()
 }
-
-
 
 var tamanhoStatus = document.getElementById("tamanho")
 var passosStatus = document.getElementById("passos")
@@ -64,7 +62,6 @@ function updateStatus() {
 }
 
 output.innerHTML = "Velocidade " + slider.value + "x";
-
 slider.oninput = function() {
     output.innerHTML = "Velocidade " + this.value + "x";
 } 

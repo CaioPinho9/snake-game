@@ -44,6 +44,14 @@ export function onSnake(position, { ignoreHead = false } = {}) {
     })
 }
 
+export function nextSnake(positionFood) {
+    var inputDirection = getInputDirection()
+    var positionHead =  { x: snakeBody[0].x + inputDirection.x, y: snakeBody[0].y + inputDirection.y }
+    console.log(positionHead);
+    console.log(positionFood);
+    return equalPositions(positionFood, positionHead)
+}
+
 export function getSnakeHead() {
     return snakeBody[0]
 }
