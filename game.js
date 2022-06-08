@@ -2,6 +2,7 @@ import { update as updateSnake, draw as drawSnake, SNAKE_SPEED, getSnakeHead, sn
 import { update as updateFood, draw as drawFood} from "./food.js"
 import { outsideGrid } from "./grid.js"
 import { getInputDirection, inputRestart, updateInput } from "./input.js";
+import { update as updateAuto } from "./automatic.js"
 
 let lastRenderTime = 0
 let gameOver = false;
@@ -30,9 +31,10 @@ window.requestAnimationFrame(main)
 
 function update() {
     var speed = slider.value
-    updateSnake(speed)
-    updateFood()
     updateInput()
+    updateAuto()
+    updateFood()
+    updateSnake(speed)
     updateStatus()
     checkDeath()
 }
