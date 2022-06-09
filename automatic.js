@@ -1,7 +1,9 @@
 import { food } from "./food.js";
 import { outsideGrid, gridDirection } from "./grid.js";
 import { setInputDirection } from "./input.js";
-import { onSnake, getSnakeHead, getSnakeTail, equalPositions } from "./snake.js";
+import { onSnake, getSnakeHead } from "./snake.js";
+
+export var finish = false
 
 export function update() {
     if (checkbox.checked) {
@@ -49,13 +51,7 @@ function checkDeath() {
 function decidePath(horizontalColision, verticalColision) {
     var inputDirection = gridDirection()
     if (horizontalColision && verticalColision) {
-        //seguir cauda
-        var position = nextPosition()
-        position.forEach((pos1, index) => {
-            if (equalPositions(pos1, getSnakeTail())) {
-                setInputDirection(inputDirection[index])
-            }
-        });
+        finish = true
         return true
     }
 

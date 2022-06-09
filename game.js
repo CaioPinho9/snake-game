@@ -2,7 +2,7 @@ import { update as updateSnake, draw as drawSnake, SNAKE_SPEED, getSnakeHead, sn
 import { update as updateFood, draw as drawFood} from "./food.js"
 import { outsideGrid } from "./grid.js"
 import { getInputDirection, inputRestart, updateInput } from "./input.js";
-import { update as updateAuto } from "./automatic.js"
+import { finish, update as updateAuto } from "./automatic.js"
 
 let lastRenderTime = 0
 let gameOver = false;
@@ -12,6 +12,11 @@ var output = document.getElementById("mostrarVelocidade");
 
 
 function main(currentTime) {
+    if (finish) {
+        if (confirm("Aperte OK para reiniciar.")) {
+            restart()
+        }
+    } 
     if (gameOver) {
         if (confirm("Aperte OK para reiniciar.")) {
             restart()
@@ -69,6 +74,7 @@ slider.oninput = function() {
 } 
 
 function restart() {
+    finish = false
     gameOver = false
     snakeRestart()
     inputRestart()
