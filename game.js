@@ -41,8 +41,8 @@ function update() {
 
 function draw() {
     gameBoard.innerHTML = ""
-    drawSnake(gameBoard)
     drawFood(gameBoard)
+    drawSnake(gameBoard)
 }
 
 function checkDeath() {
@@ -55,7 +55,7 @@ var passos = 0
 
 function updateStatus() {
     var input = getInputDirection()
-    if (input.x != 0 || input.y != 0) {
+    if ((input.x != 0 || input.y != 0) && tamanho < 400) {
         passos++
     }
     tamanhoStatus.innerHTML = "Tamanho: " + tamanho

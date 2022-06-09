@@ -3,7 +3,7 @@ import { getInputDirection } from "./input.js"
 
 export let SNAKE_SPEED = 1
 export var tamanho = 1
-let snakeBody = [{x: 13, y: 13}]
+let snakeBody = [{x: 10, y: 10}]
 let newSegments = 0
 
 export function update(speed) {
@@ -23,13 +23,27 @@ export function draw(gameBoard) {
         const snakeElement = document.createElement('div')
         snakeElement.style.gridRowStart = segment.y
         snakeElement.style.gridColumnStart = segment.x
-        if (index % 2 == 0) {
-            snakeElement.classList.add('snake')
-        } else {
-            snakeElement.classList.add('snake2')
-        }
+        snakeElement.classList.add('snake')
+    
+        color(snakeElement, index)
+        
         gameBoard.appendChild(snakeElement)
     })
+}
+
+function color(snakeElement, index) {
+    var colorB
+    var colorG
+    if (index == 0) {
+        index = 0.1
+    }
+    var percent = 1-(index/snakeBody.length)
+
+    colorB = 255*percent
+    colorG = Math.abs(colorB - 255)
+
+    snakeElement.style.backgroundColor = "rgb(0,"+colorG+","+colorB+")"
+    
 }
 
 export function expandSnake() {
@@ -54,6 +68,10 @@ export function getSnakeHead() {
     return snakeBody[0]
 }
 
+export function getSnakeTail() {
+    return snakeBody[length]
+}
+
 export function snakeIntersection() {
     return onSnake(snakeBody[0], { ignoreHead: true })
 }
@@ -65,7 +83,7 @@ export function snakeRestart() {
 
 }
 
-function equalPositions(pos1, pos2) {
+export function equalPositions(pos1, pos2) {
     return pos1.x === pos2.x && pos1.y === pos2.y
 }
 

@@ -1,17 +1,18 @@
 import { food } from "./food.js";
-import { gridDirection } from "./grid.js";
+import { outsideGrid, gridDirection } from "./grid.js";
 import { setInputDirection } from "./input.js";
-import { getSnakeHead } from "./snake.js";
+import { onSnake, getSnakeHead, getSnakeTail, equalPositions } from "./snake.js";
 
 export function update() {
     if (checkbox.checked) {
         var nextDistance = distance()
         var inputDirection = gridDirection()
-        if (nextDistance[0] < nextDistance[1] && nextDistance[0].x + nextDistance[0].y != 0) {
+        var colision = checkDeath()
+        if (nextDistance[0] < nextDistance[1] && !colision) {
             setInputDirection(inputDirection[0])
-        } else if (nextDistance[0] > nextDistance[1] && nextDistance[1].x + nextDistance[1].y != 0) {
+        } else if (nextDistance[0] > nextDistance[1] && !colision) {
             setInputDirection(inputDirection[1])
-        } else {
+        } else if (!colision) {
             setInputDirection(inputDirection[Math.round(Math.random())])
         }
     }
@@ -28,13 +29,51 @@ function nextPosition() {
     return position
 }
 
-function checkDeath(position) {
-    position.forEach(input => {
-        if (outsideGrid(position) || onSnake(position, { ignoreHead: true })) {
-            input.x = 0
-            input.y = 0
-        }
-    });
+function checkDeath() {
+    var position = nextPosition()
+    var horizontalColision = false
+    var verticalColision = false
+    
+    if (outsideGrid(position[0]) || onSnake(position[0], { ignoreHead: true })) {
+        horizontalColision = true
+    }
+
+    if (outsideGrid(position[1]) || onSnake(position[1], { ignoreHead: true })) {
+        verticalColision = true 
+    }
+
+    return decidePath(horizontalColision, verticalColision)
+    
+}
+
+function decidePath(horizontalColision, verticalColision) {
+    var inputDirection = gridDirection()
+    if (horizontalColision && verticalColision) {
+        //seguir cauda
+        var position = nextPosition()
+        position.forEach((pos1, index) => {
+            if (equalPositions(pos1, getSnakeTail())) {
+                setInputDirection(inputDirection[index])
+            }
+        });
+        return true
+    }
+
+    if (horizontalColision && !verticalColision) {
+        //horizontal
+        setInputDirection(inputDirection[1])
+        return true
+    }
+
+    if (!horizontalColision && verticalColision) {
+        //vertical
+        setInputDirection(inputDirection[0])
+        return true
+    }
+
+    if (!horizontalColision && !verticalColision) {
+        return false
+    }
 }
 
 function distance() {

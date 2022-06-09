@@ -5,7 +5,7 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0;
-    background-color: rgb(41, 41, 70);
+    background-color: rgb(30, 48, 95);
 }
 
 #menu {
@@ -42,22 +42,22 @@ p {
 }
 
 #game-board {
-    background-color: #99a0c9;
+    background-color: #68a4ff;
+    background-image: url("Perfil-Icone.ico");
+    background-repeat: no-repeat;
+    background-size: 75%;
+    background-position: center;
     height: 70vmin;
     width: 70vmin;
     margin-top: 10px;
     margin-bottom: 0px;
     display: grid;
-    grid-template-rows: repeat(24,1fr);
-    grid-template-columns: repeat(24,1fr);
+    grid-template-rows: repeat(20,1fr);
+    grid-template-columns: repeat(20,1fr);
 }
 
 .snake {
     background-color: #0074ff;
-}
-
-.snake2 {
-    background-color: #1496de;
 }
 
 .food {

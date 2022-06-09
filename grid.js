@@ -1,6 +1,6 @@
 import { getSnakeHead } from "./snake.js"
 
-const GRID_SIZE = 24
+const GRID_SIZE = 20
 
 export function randomGridPosition() {
     return {
@@ -20,7 +20,7 @@ export function gridDirection() {
     var position = getSnakeHead()
     var inputDirection = [{ x: 0, y: 0}, { x: 0, y: 0}]
     if (checkbox.checked) {
-        if (position.y % 2 == 0) {
+        if (position.y % 2 != 0) {
             inputDirection[0].x = 1
         } else {
             inputDirection[0].x = -1
