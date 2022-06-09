@@ -13,7 +13,7 @@ var output = document.getElementById("mostrarVelocidade");
 
 function main(currentTime) {
     if (finish) {
-        if (confirm("Aperte OK para reiniciar.")) {
+        if (confirm("Parabéns, você venceu!")) {
             restart()
         }
     } 
