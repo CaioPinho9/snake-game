@@ -72,13 +72,6 @@ export function snakeIntersection() {
     return onSnake(snakeBody[0], { ignoreHead: true })
 }
 
-export function snakeRestart() {
-    snakeBody = [{x: 13, y: 13}]
-    newSegments = 0
-    tamanho = 1
-
-}
-
 export function equalPositions(pos1, pos2) {
     return pos1.x === pos2.x && pos1.y === pos2.y
 }

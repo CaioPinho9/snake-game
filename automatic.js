@@ -50,10 +50,6 @@ function checkDeath() {
 
 function decidePath(horizontalColision, verticalColision) {
     var inputDirection = gridDirection()
-    if (horizontalColision && verticalColision) {
-        finish = true
-        return true
-    }
 
     if (horizontalColision && !verticalColision) {
         //horizontal

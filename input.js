@@ -39,10 +39,6 @@ export function setInputDirection(input) {
     inputDirection = input
 }
 
-export function inputRestart () {
-    inputDirection = { x: 0, y: 0}
-}
-
 export function updateInput() {
     moved = false
 }
