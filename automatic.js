@@ -3,8 +3,6 @@ import { outsideGrid, gridDirection } from "./grid.js";
 import { setInputDirection } from "./input.js";
 import { onSnake, getSnakeHead } from "./snake.js";
 
-export var finish = false
-
 export function update() {
     if (checkbox.checked) {
         var nextDistance = distance()

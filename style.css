@@ -158,4 +158,25 @@ input:checked + .slider:before {
     background: #1496de;
     cursor: pointer;
 }
+
+.button {
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 8px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #1496de;
+    border: none;
+    border-radius: 15px;
+  }
+    
+  .button:active {
+    background-color: #0074ff;
+    box-shadow: 0 0px #666;
+  }
   

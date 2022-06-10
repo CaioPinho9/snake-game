@@ -2,7 +2,7 @@ import { update as updateSnake, draw as drawSnake, SNAKE_SPEED, getSnakeHead, sn
 import { update as updateFood, draw as drawFood} from "./food.js"
 import { outsideGrid } from "./grid.js"
 import { getInputDirection, updateInput } from "./input.js";
-import { finish, update as updateAuto } from "./automatic.js"
+import { update as updateAuto } from "./automatic.js"
 
 let lastRenderTime = 0
 let gameOver = false;
@@ -11,23 +11,17 @@ var slider = document.getElementById("myRange");
 var output = document.getElementById("mostrarVelocidade");
 
 function main(currentTime) {
-    if (finish) {
-        if (confirm("Parabéns, você venceu!")) {
-            restart()
-        }
-    } 
-    if (gameOver) {
-        if (confirm("Aperte OK para reiniciar.")) {
-            restart()
-        }
-    } 
+    document.getElementById('button').onclick = function() {
+        restart()
+    }
+
     window.requestAnimationFrame(main)
     const secondsSinceLastRender = (currentTime - lastRenderTime) /1000
     if (secondsSinceLastRender < 1 / SNAKE_SPEED) return
 
     lastRenderTime = currentTime
 
-    if (!gameOver && !finish) {
+    if (!gameOver) {
         update()
     } 
     draw()
@@ -54,7 +48,7 @@ function draw() {
 function checkDeath() {
     gameOver = outsideGrid(getSnakeHead()) || snakeIntersection()
     if (tamanho == 400) {
-        finish = true
+        gameOver = true
     }
 }
 
