@@ -4,16 +4,17 @@ import { randomGridPosition as randomGridPosition} from "./grid.js"
 export let food = getRandomFoodPosition()
 
 export function update() {
-    if (nextSnake(food) || tamanho == 399) {
+    //A cobra aumenta quando detecta que no próximo passo haverá uma comida
+    //A comida é realocada quando ocorre a colisão com a cobra
+    if (nextSnake(food)) {
         expandSnake()
-    }
-
-    if (onSnake(food)) {
         food = getRandomFoodPosition()
     }
+
 }
 
 export function draw(gameBoard) {
+    //A comida é desenhada em determinada posição do grid
     const foodElement = document.createElement('div')
     foodElement.style.gridRowStart = food.y
     foodElement.style.gridColumnStart = food.x
@@ -24,6 +25,8 @@ export function draw(gameBoard) {
 function getRandomFoodPosition() {
     let newFoodPosition
 
+    //A comida será realocada quando não estiver posicionada ou se estiver em cima da cobra
+    //Ela irá continuar tentando até achar um local vago
     while (newFoodPosition == null || onSnake(newFoodPosition)) {
         newFoodPosition = randomGridPosition()
     }
