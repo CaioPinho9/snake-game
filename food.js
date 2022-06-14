@@ -4,10 +4,13 @@ import { randomGridPosition as randomGridPosition} from "./grid.js"
 export let food = getRandomFoodPosition()
 
 export function update() {
-    //A cobra aumenta quando detecta que no próximo passo haverá uma comida
-    //A comida é realocada quando ocorre a colisão com a cobra
-    if (nextSnake(food)) {
+    if (nextSnake(food) || tamanho == 399) {
+        //A cobra aumenta quando detecta que no próximo passo haverá uma comida
         expandSnake()
+    }
+    
+    if (onSnake(food)) {
+        //A comida é realocada quando ocorre a colisão com a cobra
         food = getRandomFoodPosition()
     }
 
