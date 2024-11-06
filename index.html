@@ -21,21 +21,33 @@
             <p>Automatico</p>
         </div>
 
-        <br>
+        <div id="tamanhoBoard">
+            <p id="mostrarTamanho"> Tamanho</p>
+            <div class="slidecontainer">
+                <input type="range" min="2" max="1000" value="20" class="sliderRange" id="myRange2">
+            </div>
+        </div>
+
 
         <div id="velocidade">
             <p id="mostrarVelocidade"> Velocidade</p>
             <div class="slidecontainer">
-                <input type="range" min="1" max="500" value="5" class="sliderRange" id="myRange">
+                <input type="range" min="1" max="100" value="5" class="sliderRange" id="myRange">
             </div>
         </div>
 
         <div id="game-board"></div>
 
         <div id="status">
-            <p id="tamanho">Tamanho: </p>
+            <div style="text-align: left;">
+                <p id="tamanho">Tamanho: </p>
+                <p id="time">Tempo: </p>
+            </div>
             <button id="button" class="button">Restart</button>
-            <p id="passos">Passos: </p>
+            <div style="text-align: left;">
+                <p id="passos">Passos: </p>
+                <p id="passoss">Passos/s: </p>
+            </div>
         </div>
         
     </div>

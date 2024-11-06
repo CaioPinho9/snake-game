@@ -22,8 +22,11 @@ p {
 
 /*Estatísticas do jogo*/
 #status {
-    display: inline;
+    display: flex;
     position: relative;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1px;
 }
 
 #tamanho {
@@ -48,8 +51,6 @@ p {
     margin-top: 10px;
     margin-bottom: 0px;
     display: grid;
-    grid-template-rows: repeat(20,1fr);
-    grid-template-columns: repeat(20,1fr);
     border: 10px solid #0073ff;
     border-radius: 10px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.35);
