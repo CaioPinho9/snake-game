@@ -29,12 +29,12 @@ p {
     padding: 1px;
 }
 
-#tamanho {
+#size {
     position: relative;
     float: left;
 }
 
-#passos {
+#steps {
     position: relative;
     float: right;
 }

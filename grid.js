@@ -1,11 +1,10 @@
-//Tamanho do grid
-export const GRID_SIZE = 20;
+import { getGridSize } from "./game.js";
 
 export function randomGridPosition() {
   //Envia uma coordenada aleatória, para realocar a comida
   return {
-    x: Math.floor(Math.random() * GRID_SIZE) + 1,
-    y: Math.floor(Math.random() * GRID_SIZE) + 1,
+    x: Math.floor(Math.random() * getGridSize()) + 1,
+    y: Math.floor(Math.random() * getGridSize()) + 1,
   };
 }
 
@@ -13,9 +12,9 @@ export function outsideGrid(position) {
   //Detecta se uma posição está fora do grid
   return (
     position.x < 1 ||
-    position.x > GRID_SIZE ||
+    position.x > getGridSize() ||
     position.y < 1 ||
-    position.y > GRID_SIZE
+    position.y > getGridSize()
   );
 }
 

@@ -40,7 +40,7 @@ function checkDirection(position) {
 
 function recursiveDiagonalDistanceCheck(nextPos, inputDirection, depth = 3) {
   // Base case to prevent deep recursion and infinite loops
-  if (depth === 0) return inputDirection[Math.round(Math.random())] ;
+  if (depth === 0) return inputDirection[Math.round(Math.random())];
 
   var direction1 = checkDirection(nextPos[0]);
   var direction2 = checkDirection(nextPos[1]);
@@ -62,7 +62,11 @@ function recursiveDiagonalDistanceCheck(nextPos, inputDirection, depth = 3) {
   }
 
   // Recursively check further positions
-  return recursiveDiagonalDistanceCheck([nextPos1, nextPos2], inputDirection, depth - 1);
+  return recursiveDiagonalDistanceCheck(
+    [nextPos1, nextPos2],
+    inputDirection,
+    depth - 1
+  );
 }
 
 function nextPosition(headPosition) {
