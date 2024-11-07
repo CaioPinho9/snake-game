@@ -1,32 +1,37 @@
 import { getGridSize } from "./game.js";
 import { getInputDirection } from "./input.js";
+import Queue from "./queue.js";
 
 export let SNAKE_SPEED = 1;
-export var size = 1;
-let snakeBody = [];
+let snakeBody = new Queue();
 let newSegments = 0;
+
+let colisionMatrix = [];
 
 export function update(speed) {
   //Aumentando a velocidade de acordo com o slider
   SNAKE_SPEED = speed;
 
-  //Aumentar o tamanho da cobra
-  addSegments();
-
-  //A cauda é apagada e as partes do corpo pulam para a proxima posição
-  for (let i = snakeBody.length - 2; i >= 0; i--) {
-    snakeBody[i + 1] = { ...snakeBody[i] };
-  }
-
   //A cabeça da cobra se move de acordo com a direção recebida
   const inputDirection = getInputDirection();
-  snakeBody[0].x += inputDirection.x;
-  snakeBody[0].y += inputDirection.y;
+  let newHead = { ...getSnakeHead() };
+  newHead.x += inputDirection.x;
+  newHead.y += inputDirection.y;
+  snakeBody.enqueue(newHead);
+  colisionMatrix[newHead.x][newHead.y] = true;
+
+  // A cauda é apagada
+  if (snakeBody.length > 1 && !newSegments) {
+    colisionMatrix[snakeBody.peek().x][snakeBody.peek().y] = false;
+    snakeBody.dequeue();
+  }
+  newSegments = 0;
 }
 
 export function draw(gameBoard) {
   //Cada parte da cobra tem uma posição no grid
-  snakeBody.forEach((segment, index) => {
+  let index = 0;
+  snakeBody.forEach((segment) => {
     const snakeElement = document.createElement("div");
     snakeElement.style.gridRowStart = segment.y;
     snakeElement.style.gridColumnStart = segment.x;
@@ -34,6 +39,7 @@ export function draw(gameBoard) {
 
     //Altera a cor dessa parte
     color(snakeElement, index);
+    index++;
 
     gameBoard.appendChild(snakeElement);
   });
@@ -43,15 +49,19 @@ function color(snakeElement, index) {
   //Cores
   var colorB;
   var colorG;
-  if (index == 0) {
-    index = 0.1;
+
+  if (snakeBody.length == 1) {
+    //Se a cobra tiver apenas uma parte, a cor é fixa
+    snakeElement.style.backgroundColor = "rgb(0,0,255)";
+    return;
   }
+
   //Calcular porcentagem de acordo com o size
-  var percent = 1 - index / snakeBody.length;
+  var percent = 1 - (index + 1) / snakeBody.length;
 
   //Quanto mais próximo da cabeça, maior a porcentagem de azul, e menor porcetagem de verde
-  colorB = 255 * percent;
-  colorG = Math.abs(colorB - 255);
+  colorG = 255 * percent;
+  colorB = Math.abs(colorG - 255);
 
   snakeElement.style.backgroundColor = "rgb(0," + colorG + "," + colorB + ")";
 }
@@ -59,17 +69,17 @@ function color(snakeElement, index) {
 export function expandSnake() {
   //Quando a cobra aumenta, newSegments indica que pode criar uma nova cauda
   newSegments += 1;
-  //E as estátisticas aumentam
-  size++;
 }
 
 export function onSnake(position, { ignoreHead = false } = {}) {
-  //Detecta se determinada posição está em cima da cobra
-  //Podendo ignorar a cabeça de acordo com os parametros
-  return snakeBody.some((segment, index) => {
-    if (ignoreHead && index === 0) return false;
-    return equalPositions(segment, position);
-  });
+  //Detecta se a posição está na cobra
+  if (ignoreHead && equalPositions(getSnakeHead(), position)) return false;
+
+  if (colisionMatrix[position.x] === undefined) {
+    return false;
+  }
+
+  return colisionMatrix[position.x][position.y];
 }
 
 export function nextSnake(positionFood) {
@@ -79,21 +89,21 @@ export function nextSnake(positionFood) {
   //Evitando que a cobra morra por falta de espaço ao crescer
   var inputDirection = getInputDirection();
   var positionHead = {
-    x: snakeBody[0].x + inputDirection.x,
-    y: snakeBody[0].y + inputDirection.y,
+    x: getSnakeHead().x + inputDirection.x,
+    y: getSnakeHead().y + inputDirection.y,
   };
   return equalPositions(positionFood, positionHead);
 }
 
 export function getSnakeHead() {
   //Retorna a cabeça
-  return snakeBody[0];
+  return snakeBody.peekBack();
 }
 
 export function snakeIntersection() {
   //Detecta se a cobra acertou ela mesma
   //A cabeça é ignorada, pois ela é o alvo da colisão
-  return onSnake(snakeBody[0], { ignoreHead: true });
+  return onSnake(getSnakeHead(), { ignoreHead: true });
 }
 
 export function equalPositions(pos1, pos2) {
@@ -101,19 +111,18 @@ export function equalPositions(pos1, pos2) {
   return pos1.x === pos2.x && pos1.y === pos2.y;
 }
 
-function addSegments() {
-  //A calda criada é uma cópia na última posição que a calda esteve antes de crescer
-  //newSegments determina se ela cresceu ou não nesse update
-  for (let i = 0; i < newSegments; i++) {
-    snakeBody.push({ ...snakeBody[snakeBody.length - 1] });
-  }
-  newSegments = 0;
-}
-
 export function resetSnake() {
   //Reseta a cobra
   var startPosition = Math.round(getGridSize() / 2);
-  snakeBody = [{ x: startPosition, y: startPosition }];
-  size = 1;
+  snakeBody = new Queue();
+  snakeBody.enqueue({ x: startPosition, y: startPosition });
   newSegments = 0;
+  colisionMatrix = Array.from({ length: getGridSize() + 1 }, () =>
+    Array.from({ length: getGridSize() + 1 }, () => false)
+  );
+  colisionMatrix[startPosition][startPosition] = true;
+}
+
+export function getSnakeSize() {
+  return snakeBody.length;
 }

@@ -4,7 +4,7 @@ import {
   getSnakeHead,
   snakeIntersection,
   resetSnake,
-  size,
+  getSnakeSize,
 } from "./snake.js";
 import { update as updateFood, draw as drawFood, resetFood } from "./food.js";
 import { outsideGrid } from "./grid.js";
@@ -46,10 +46,10 @@ function main(currentTime) {
   }
 
   window.requestAnimationFrame(main);
-  const secondsSinceLastRender = currentTime - lastRenderTime;
+  const secondsSinceLastRender = (currentTime - lastRenderTime) / 1000;
 
   // Render only when necessary
-  if (secondsSinceLastRender < 1000 / speed) return;
+  if (secondsSinceLastRender < 1 / 24) return;
 
   lastRenderTime = currentTime;
   draw(); // Handle drawing in the main render loop
@@ -100,7 +100,7 @@ function checkDeath() {
   //O jogo acaba se a cabeça da cobra for detectada fora do grid ou dentro de si mesma
   gameOver = outsideGrid(getSnakeHead()) || snakeIntersection();
   //O jogo se encerra quando a cobra fica no size máximo
-  if (size == gridSize * gridSize) {
+  if (getSnakeSize() == gridSize * gridSize) {
     gameOver = true;
   }
 }
@@ -115,11 +115,11 @@ var steps = 0;
 function updateStatus() {
   //Se a cobra estiver em movimento a quantidade de steps aumenta
   var input = getInputDirection();
-  if ((input.x != 0 || input.y != 0) && size < gridSize * gridSize) {
+  if ((input.x != 0 || input.y != 0) && getSnakeSize() < gridSize * gridSize) {
     steps++;
   }
   //As estátisticas são alteradas
-  sizeStatus.innerHTML = "Tamanho: " + size;
+  sizeStatus.innerHTML = "Tamanho: " + getSnakeSize();
   stepsPerSecondtatus.innerHTML = "Passos: " + steps;
 
   let time = (Date.now() - startTime) / 1000;
@@ -139,7 +139,7 @@ function updateStatus() {
     stepsPerSecondStatus.innerHTML = "Passos/s: " + avgstepsPerSecond;
   }
 
-  if (size < gridSize * gridSize - 1)
+  if (getSnakeSize() < gridSize * gridSize - 1)
     timeStatus.innerHTML = "Tempo: " + Math.round(time) + "s";
 }
 
