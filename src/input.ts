@@ -1,12 +1,14 @@
-let inputDirection = { x: 0, y: 0 };
-var checkbox = document.getElementById("checkbox");
+import { Vector2f } from "./types/vector2f.js";
+
+const checkbox = document.getElementById("checkbox") as HTMLInputElement;
+let inputDirection = new Vector2f(0, 0);
 var moved = false;
 
 window.addEventListener("keydown", (e) => {
   //Modo manual ativo e ainda não se moveu no último update
   //Detecta a direção das setas do teclado
   //Não é possível seguir na direção oposta do update anterior
-  if (!checkbox.checked && !moved) {
+  if (!checkbox!.checked && !moved) {
     switch (e.key) {
       case "ArrowUp":
         //Cima
@@ -44,7 +46,7 @@ export function getInputDirection() {
   return inputDirection;
 }
 
-export function setInputDirection(input) {
+export function setInputDirection(input: Vector2f) {
   //A direção é definida pelo modo automatico
   inputDirection = input;
 }

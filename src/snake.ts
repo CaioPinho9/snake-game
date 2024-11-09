@@ -1,14 +1,15 @@
 import { getGridSize } from "./game.js";
 import { getInputDirection } from "./input.js";
-import Queue from "./queue.js";
+import Queue from "./types/queue.js";
+import { Vector2f } from "./types/vector2f.js";
 
 export let SNAKE_SPEED = 1;
 let snakeBody = new Queue();
 let newSegments = 0;
 
-let colisionMatrix = [];
+let colisionMatrix: boolean[][] = [];
 
-export function update(speed) {
+export function updateSnake(speed: number) {
   //Aumentando a velocidade de acordo com o slider
   SNAKE_SPEED = speed;
 
@@ -28,7 +29,7 @@ export function update(speed) {
   newSegments = 0;
 }
 
-export function draw(gameBoard) {
+export function drawSnake(gameBoard: HTMLElement) {
   //Cada parte da cobra tem uma posição no grid
   let index = 0;
   snakeBody.forEach((segment) => {
@@ -42,10 +43,10 @@ export function draw(gameBoard) {
     index++;
 
     gameBoard.appendChild(snakeElement);
-  });
+  }, undefined);
 }
 
-function color(snakeElement, index) {
+function color(snakeElement: HTMLDivElement, index: number) {
   //Cores
   var colorB;
   var colorG;
@@ -71,7 +72,7 @@ export function expandSnake() {
   newSegments += 1;
 }
 
-export function onSnake(position, { ignoreHead = false } = {}) {
+export function onSnake(position: Vector2f, { ignoreHead = false } = {}) {
   //Detecta se a posição está na cobra
   if (ignoreHead && equalPositions(getSnakeHead(), position)) return false;
 
@@ -82,7 +83,7 @@ export function onSnake(position, { ignoreHead = false } = {}) {
   return colisionMatrix[position.x][position.y];
 }
 
-export function nextSnake(positionFood) {
+export function nextSnake(positionFood: Vector2f) {
   //Detecta se a comida e a cabeça irão se encontrar no próximo passo
   //A cobra cresce quando essa função é verdadeira
   //Dessa forma a cobra já está crescida quando colide com a comida
@@ -106,7 +107,10 @@ export function snakeIntersection() {
   return onSnake(getSnakeHead(), { ignoreHead: true });
 }
 
-export function equalPositions(pos1, pos2) {
+export function equalPositions(
+  pos1: { x: any; y: any },
+  pos2: { x: any; y: any }
+) {
   //Retorna verdadeiro se as duas posições forem iguais
   return pos1.x === pos2.x && pos1.y === pos2.y;
 }

@@ -2,15 +2,18 @@ import { food } from "./food.js";
 import { outsideGrid, gridDirection } from "./grid.js";
 import { setInputDirection } from "./input.js";
 import { onSnake, getSnakeHead } from "./snake.js";
+import { Vector2f } from "./types/vector2f.js";
 
-export function update() {
+const checkbox = document.getElementById("checkbox") as HTMLInputElement;
+
+export function updateAuto() {
   //Modo automatico ativo
   if (checkbox.checked) {
     setInputDirection(checkDirection(getSnakeHead()));
   }
 }
 
-function checkDirection(position) {
+function checkDirection(position: Vector2f) {
   //Distancia entre comida e as futuras posições da cabeça da cobra
   var nextPos = nextPosition(position);
   var nextDistance = distance(nextPos);
@@ -38,7 +41,11 @@ function checkDirection(position) {
   }
 }
 
-function recursiveDiagonalDistanceCheck(nextPos, inputDirection, depth = 3) {
+function recursiveDiagonalDistanceCheck(
+  nextPos: Vector2f[],
+  inputDirection: Vector2f[],
+  depth = 3
+) {
   // Base case to prevent deep recursion and infinite loops
   if (depth === 0) return inputDirection[Math.round(Math.random())];
 
@@ -69,7 +76,7 @@ function recursiveDiagonalDistanceCheck(nextPos, inputDirection, depth = 3) {
   );
 }
 
-function nextPosition(headPosition) {
+function nextPosition(headPosition: { x: number; y: number }) {
   //Retorna as duas possíveis posições que a cobra pode ir, de acordo com as direções do grid
 
   var inputDirection = gridDirection(headPosition);
@@ -84,7 +91,7 @@ function nextPosition(headPosition) {
   return position;
 }
 
-function checkDeath(headPosition, nextPos) {
+function checkDeath(headPosition: any, nextPos: any[]) {
   //Possíveis posições futuras
 
   var horizontalColision = false;
@@ -103,7 +110,11 @@ function checkDeath(headPosition, nextPos) {
   return decidePath(horizontalColision, verticalColision, headPosition);
 }
 
-function decidePath(horizontalColision, verticalColision, headPosition) {
+function decidePath(
+  horizontalColision: boolean,
+  verticalColision: boolean,
+  headPosition: any
+) {
   var inputDirection = gridDirection(headPosition);
 
   //Se acontecer uma colisão em um sentido, ela se movimenta para o outro
@@ -123,7 +134,7 @@ function decidePath(horizontalColision, verticalColision, headPosition) {
   }
 }
 
-function distance(positions) {
+function distance(positions: { x: any; y: any }[]) {
   //Retorna a distancia entre a comida e as duas possíveis posições da cobra
   var pos1 = food;
   var pos2 = positions;
