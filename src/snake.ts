@@ -3,16 +3,12 @@ import { getInputDirection } from "./input.js";
 import Queue from "./types/queue.js";
 import { Vector2f } from "./types/vector2f.js";
 
-export let SNAKE_SPEED = 1;
 let snakeBody = new Queue();
 let newSegments = 0;
 
 let colisionMatrix: boolean[][] = [];
 
-export function updateSnake(speed: number) {
-  //Aumentando a velocidade de acordo com o slider
-  SNAKE_SPEED = speed;
-
+export function updateSnake() {
   //A cabeça da cobra se move de acordo com a direção recebida
   const inputDirection = getInputDirection();
   let newHead = { ...getSnakeHead() };
@@ -31,18 +27,18 @@ export function updateSnake(speed: number) {
 
 export function drawSnake(gameBoard: HTMLElement) {
   //Cada parte da cobra tem uma posição no grid
-  let index = 0;
-  snakeBody.forEach((segment) => {
-    const snakeElement = document.createElement("div");
+    let index = 0;
+    snakeBody.forEach((segment) => {
+  const snakeElement = document.createElement("div");
     snakeElement.style.gridRowStart = segment.y;
     snakeElement.style.gridColumnStart = segment.x;
-    snakeElement.classList.add("snake");
+  snakeElement.classList.add("snake");
 
-    //Altera a cor dessa parte
-    color(snakeElement, index);
+  //Altera a cor dessa parte
+  color(snakeElement, index);
     index++;
 
-    gameBoard.appendChild(snakeElement);
+  gameBoard.appendChild(snakeElement);
   }, undefined);
 }
 

@@ -13,7 +13,7 @@ import { updateAuto } from "./automatic.js";
 
 const gameBoard = document.getElementById("game-board");
 const restartButton = document.getElementById("button");
-const checkbox = document.getElementById("checkbox") as HTMLInputElement;
+const automatic = document.getElementById("automatic") as HTMLInputElement;
 
 const speedSlider = document.getElementById("speedSlider") as HTMLInputElement;
 const speedOutput = document.getElementById("speedOutput");
@@ -50,7 +50,7 @@ function main(currentTime: number) {
   speed = Number(speedSlider.value);
   updateGridSize();
 
-  if (checkbox.checked && !lastAuto) {
+  if (automatic.checked && !lastAuto) {
     startTime = Date.now();
     lastAuto = true;
   }
@@ -94,7 +94,7 @@ function update() {
   updateInput();
   updateAuto();
   updateFood();
-  updateSnake(speed);
+  updateSnake();
   updateStatus();
   checkDeath();
 }
@@ -184,6 +184,7 @@ function restart() {
   //Recarregar página ao resetar o jogo
   resetSnake();
   resetFood();
+  gameBoard!.innerHTML = "";
   steps = 0;
   stepsPerSecondList = [];
   lastTime = 0;

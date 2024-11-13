@@ -1,6 +1,6 @@
 import { Vector2f } from "./types/vector2f.js";
 
-const checkbox = document.getElementById("checkbox") as HTMLInputElement;
+const automatic = document.getElementById("automatic") as HTMLInputElement;
 let inputDirection = new Vector2f(0, 0);
 var moved = false;
 
@@ -8,7 +8,7 @@ window.addEventListener("keydown", (e) => {
   //Modo manual ativo e ainda não se moveu no último update
   //Detecta a direção das setas do teclado
   //Não é possível seguir na direção oposta do update anterior
-  if (!checkbox!.checked && !moved) {
+  if (!automatic!.checked && !moved) {
     switch (e.key) {
       case "ArrowUp":
         //Cima

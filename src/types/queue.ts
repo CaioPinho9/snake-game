@@ -18,7 +18,7 @@ class Queue {
   }
 
   // Add an element to the end of the queue
-  enqueue(element: { x: number; y: number; }) {
+  enqueue(element: any) {
     const newNode = new Node(element);
     if (this.isEmpty()) {
       this.head = newNode;

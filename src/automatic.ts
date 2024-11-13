@@ -4,11 +4,11 @@ import { setInputDirection } from "./input.js";
 import { onSnake, getSnakeHead } from "./snake.js";
 import { Vector2f } from "./types/vector2f.js";
 
-const checkbox = document.getElementById("checkbox") as HTMLInputElement;
+const automatic = document.getElementById("automatic") as HTMLInputElement;
 
 export function updateAuto() {
   //Modo automatico ativo
-  if (checkbox.checked) {
+  if (automatic.checked) {
     setInputDirection(checkDirection(getSnakeHead()));
   }
 }
