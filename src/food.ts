@@ -1,13 +1,14 @@
 import { onSnake, expandSnake, nextSnake } from "./snake.js";
 import { randomGridPosition as randomGridPosition } from "./grid.js";
+import { Vector2f } from "./types/vector2f.js";
 
-export let food;
+export let food: Vector2f;
 
 export function resetFood() {
   food = getRandomFoodPosition();
 }
 
-export function update() {
+export function updateFood() {
   if (nextSnake(food)) {
     //A cobra aumenta quando detecta que no próximo passo haverá uma comida
     expandSnake();
@@ -20,11 +21,11 @@ export function update() {
   }
 }
 
-export function draw(gameBoard) {
+export function drawFood(gameBoard: HTMLElement) {
   //A comida é desenhada em determinada posição do grid
   const foodElement = document.createElement("div");
-  foodElement.style.gridRowStart = food.y;
-  foodElement.style.gridColumnStart = food.x;
+  foodElement!.style.gridRowStart = food.y.toString();
+  foodElement!.style.gridColumnStart = food.x.toString();
   foodElement.classList.add("food");
   gameBoard.appendChild(foodElement);
 }

@@ -1,22 +1,31 @@
 import {
-  update as updateSnake,
-  draw as drawSnake,
+  updateSnake as updateSnake,
+  drawSnake as drawSnake,
   getSnakeHead,
   snakeIntersection,
   resetSnake,
   getSnakeSize,
 } from "./snake.js";
-import { update as updateFood, draw as drawFood, resetFood } from "./food.js";
 import { outsideGrid } from "./grid.js";
 import { getInputDirection, updateInput } from "./input.js";
-import { update as updateAuto } from "./automatic.js";
+import { drawFood, resetFood, updateFood } from "./food.js";
+import { updateAuto } from "./automatic.js";
 
 const gameBoard = document.getElementById("game-board");
-var speedSlider = document.getElementById("speedSlider");
-var speedOutput = document.getElementById("speedOutput");
+const restartButton = document.getElementById("button");
+const automatic = document.getElementById("automatic") as HTMLInputElement;
 
-var sizeSlider = document.getElementById("sizeSlider");
-var sizeOutput = document.getElementById("sizeOutput");
+const speedSlider = document.getElementById("speedSlider") as HTMLInputElement;
+const speedOutput = document.getElementById("speedOutput");
+
+const sizeSlider = document.getElementById("sizeSlider") as HTMLInputElement;
+const sizeOutput = document.getElementById("sizeOutput");
+
+//Estátisticas do jogo
+const sizeStatus = document.getElementById("size");
+const stepsPerSecondtatus = document.getElementById("steps");
+const stepsPerSecondStatus = document.getElementById("stepsPerSecond");
+const timeStatus = document.getElementById("time");
 
 let startTime = Date.now();
 
@@ -26,21 +35,22 @@ let lastUpdateTime = 0;
 let lastAuto = false;
 let lastTime = 0;
 let lastSteps = 0;
-let stepsPerSecondList = [];
-
-let gridSize = sizeSlider.value;
-let speed = speedSlider.value;
 let lastGridSize = 0;
+
+let stepsPerSecondList: number[] = [];
+var steps = 0;
+let gridSize: number = Number(sizeSlider.value);
+let speed: number = Number(speedSlider.value);
 
 resetSnake();
 resetFood();
 
-function main(currentTime) {
+function main(currentTime: number) {
   //O slider da velocidade indica a speed da cobra
-  speed = speedSlider.value;
+  speed = Number(speedSlider.value);
   updateGridSize();
 
-  if (checkbox.checked && !lastAuto) {
+  if (automatic.checked && !lastAuto) {
     startTime = Date.now();
     lastAuto = true;
   }
@@ -71,7 +81,7 @@ function startUpdateLoop() {
 }
 
 // Restart button to reset the game
-document.getElementById("button").onclick = function () {
+restartButton!.onclick = function () {
   restart();
 };
 
@@ -84,16 +94,16 @@ function update() {
   updateInput();
   updateAuto();
   updateFood();
-  updateSnake(speed);
+  updateSnake();
   updateStatus();
   checkDeath();
 }
 
 function draw() {
   //A tela é apagada para depois desenhar a cobra e a comida
-  gameBoard.innerHTML = "";
-  drawFood(gameBoard);
-  drawSnake(gameBoard);
+  gameBoard!.innerHTML = "";
+  drawFood(gameBoard!);
+  drawSnake(gameBoard!);
 }
 
 function checkDeath() {
@@ -105,13 +115,6 @@ function checkDeath() {
   }
 }
 
-//Estátisticas do jogo
-var sizeStatus = document.getElementById("size");
-var stepsPerSecondtatus = document.getElementById("steps");
-var stepsPerSecondStatus = document.getElementById("stepsPerSecond");
-var timeStatus = document.getElementById("time");
-var steps = 0;
-
 function updateStatus() {
   //Se a cobra estiver em movimento a quantidade de steps aumenta
   var input = getInputDirection();
@@ -119,8 +122,8 @@ function updateStatus() {
     steps++;
   }
   //As estátisticas são alteradas
-  sizeStatus.innerHTML = "Tamanho: " + getSnakeSize();
-  stepsPerSecondtatus.innerHTML = "Passos: " + steps;
+  sizeStatus!.innerHTML = "Tamanho: " + getSnakeSize();
+  stepsPerSecondtatus!.innerHTML = "Passos: " + steps;
 
   let time = (Date.now() - startTime) / 1000;
 
@@ -136,23 +139,24 @@ function updateStatus() {
       stepsPerSecondList.reduce((a, b) => a + b, 0) / stepsPerSecondList.length
     );
 
-    stepsPerSecondStatus.innerHTML = "Passos/s: " + avgstepsPerSecond;
+    stepsPerSecondStatus!.innerHTML = "Passos/s: " + avgstepsPerSecond;
   }
 
   if (getSnakeSize() < gridSize * gridSize - 1)
-    timeStatus.innerHTML = "Tempo: " + Math.round(time) + "s";
+    timeStatus!.innerHTML = "Tempo: " + Math.round(time) + "s";
 }
 
 //Slider de velocidade
-speedOutput.innerHTML = "Velocidade " + speedSlider.value + "x";
+speedOutput!.innerHTML = "Velocidade " + speedSlider.value + "x";
 speedSlider.oninput = function () {
-  speedOutput.innerHTML = "Velocidade " + this.value + "x";
+  speedOutput!.innerHTML =
+    "Velocidade " + (this as HTMLInputElement).value + "x";
 };
 
 //Slider de tamanho
-sizeOutput.innerHTML = "Tamanho " + sizeSlider.value;
+sizeOutput!.innerHTML = "Tamanho " + sizeSlider.value;
 sizeSlider.oninput = function () {
-  sizeOutput.innerHTML = "Tamanho " + this.value;
+  sizeOutput!.innerHTML = "Tamanho " + (this as HTMLInputElement).value;
 };
 
 export function getGridSize() {
@@ -164,14 +168,14 @@ function updateGridSize() {
 
   if (gridSize % 2 != 0) {
     gridSize++;
-    sizeSlider.value = gridSize;
-    sizeOutput.innerHTML = "Tamanho " + gridSize;
+    sizeSlider.value = String(gridSize);
+    sizeOutput!.innerHTML = "Tamanho " + gridSize;
   }
 
   if (gridSize != lastGridSize) {
     lastGridSize = gridSize;
-    gameBoard.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
-    gameBoard.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+    gameBoard!.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+    gameBoard!.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
     restart();
   }
 }
@@ -180,6 +184,7 @@ function restart() {
   //Recarregar página ao resetar o jogo
   resetSnake();
   resetFood();
+  gameBoard!.innerHTML = "";
   steps = 0;
   stepsPerSecondList = [];
   lastTime = 0;
