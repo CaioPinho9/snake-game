@@ -19,35 +19,31 @@ export function updateSnake() {
     }
     newSegments = 0;
 }
-export function drawSnake(gameBoard) {
+export function drawSnake(gameBoard, cellHeight, cellWidth) {
     //Cada parte da cobra tem uma posição no grid
     let index = 0;
     snakeBody.forEach((segment) => {
-        const snakeElement = document.createElement("div");
-        snakeElement.style.gridRowStart = segment.y;
-        snakeElement.style.gridColumnStart = segment.x;
-        snakeElement.classList.add("snake");
+        const colorRGB = color(index);
+        gameBoard.fillStyle = colorRGB;
+        gameBoard.fillRect(segment.x * cellWidth, segment.y * cellHeight, cellWidth, cellHeight);
         //Altera a cor dessa parte
-        color(snakeElement, index);
         index++;
-        gameBoard.appendChild(snakeElement);
     }, undefined);
 }
-function color(snakeElement, index) {
+function color(index) {
     //Cores
     var colorB;
     var colorG;
     if (snakeBody.length == 1) {
         //Se a cobra tiver apenas uma parte, a cor é fixa
-        snakeElement.style.backgroundColor = "rgb(0,0,255)";
-        return;
+        return "rgb(0,0,255)";
     }
     //Calcular porcentagem de acordo com o size
     var percent = 1 - (index + 1) / snakeBody.length;
     //Quanto mais próximo da cabeça, maior a porcentagem de azul, e menor porcetagem de verde
     colorG = 255 * percent;
     colorB = Math.abs(colorG - 255);
-    snakeElement.style.backgroundColor = "rgb(0," + colorG + "," + colorB + ")";
+    return "rgb(0," + colorG + "," + colorB + ")";
 }
 export function expandSnake() {
     //Quando a cobra aumenta, newSegments indica que pode criar uma nova cauda
@@ -89,11 +85,16 @@ export function equalPositions(pos1, pos2) {
 }
 export function resetSnake() {
     //Reseta a cobra
-    var startPosition = Math.round(getGridSize() / 2);
+    var gridSize = getGridSize();
+    var startPosition = gridSize % 2 === 0
+        ? Math.random() < 0.5
+            ? Math.floor(gridSize / 2)
+            : Math.ceil(gridSize / 2)
+        : Math.round(gridSize / 2);
     snakeBody = new Queue();
     snakeBody.enqueue({ x: startPosition, y: startPosition });
     newSegments = 0;
-    colisionMatrix = Array.from({ length: getGridSize() + 1 }, () => Array.from({ length: getGridSize() + 1 }, () => false));
+    colisionMatrix = Array.from({ length: getGridSize() }, () => Array.from({ length: getGridSize() + 1 }, () => false));
     colisionMatrix[startPosition][startPosition] = true;
 }
 export function getSnakeSize() {

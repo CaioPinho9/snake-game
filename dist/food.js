@@ -15,13 +15,10 @@ export function updateFood() {
         food = getRandomFoodPosition();
     }
 }
-export function drawFood(gameBoard) {
+export function drawFood(context, cellHeight, cellWidth) {
     //A comida é desenhada em determinada posição do grid
-    const foodElement = document.createElement("div");
-    foodElement.style.gridRowStart = food.y.toString();
-    foodElement.style.gridColumnStart = food.x.toString();
-    foodElement.classList.add("food");
-    gameBoard.appendChild(foodElement);
+    context.fillStyle = "red";
+    context.fillRect(food.x * cellWidth, food.y * cellHeight, cellWidth, cellHeight);
 }
 function getRandomFoodPosition() {
     let newFoodPosition;
