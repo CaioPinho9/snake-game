@@ -2,7 +2,6 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="Perfil-Icone.ico" type="image/x-icom" />
     <title>Snake Game</title>
@@ -14,14 +13,14 @@
       <div id="controls">
         <div id="mode-switch">
           <label class="switch">
-            <input id="automatic" type="checkbox" title="Automático" />
+            <input id="automatic" type="checkbox" title="Automatic" />
             <span class="slider round"></span>
           </label>
-          <p>Automático</p>
+          <p>Automatic</p>
         </div>
         <div id="sliders">
           <div class="slider-group">
-            <p id="sizeOutput">Tamanho</p>
+            <p id="sizeOutput">Grid Size</p>
             <input
               type="range"
               min="2"
@@ -29,11 +28,11 @@
               value="20"
               class="sliderRange"
               id="sizeSlider"
-              title="Tamanho"
+              title="Grid Size"
             />
           </div>
           <div class="slider-group">
-            <p id="speedOutput">Velocidade</p>
+            <p id="speedOutput">Speed</p>
             <input
               type="range"
               min="1"
@@ -41,7 +40,7 @@
               value="5"
               class="sliderRange"
               id="speedSlider"
-              title="Velocidade"
+              title="Speed"
             />
           </div>
         </div>
@@ -52,12 +51,12 @@
       </div>
       <div id="game-status">
         <div class="status-group">
-          <p id="size">Tamanho: 1</p>
-          <p id="time">Tempo: 0s</p>
+          <p id="size">Snake Size: 1</p>
+          <p id="time">Time: 0s</p>
         </div>
         <div class="status-group">
-          <p id="steps">Passos: 0</p>
-          <p id="stepsPerSecond">Passos/s: 0</p>
+          <p id="steps">Steps: 0</p>
+          <p id="stepsPerSecond">Steps/s: 0</p>
         </div>
         <button id="button" class="button" type="button">Restart</button>
       </div>

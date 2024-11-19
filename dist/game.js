@@ -98,8 +98,8 @@ function updateStatus() {
         steps++;
     }
     //As estátisticas são alteradas
-    sizeStatus.innerHTML = "Tamanho: " + getSnakeSize();
-    stepsPerSecondtatus.innerHTML = "Passos: " + steps;
+    sizeStatus.innerHTML = "Snake Size: " + getSnakeSize();
+    stepsPerSecondtatus.innerHTML = "Steps: " + steps;
     let time = (Date.now() - startTime) / 1000;
     if (time > 0 && time - lastTime > 1) {
         let stepsPerSecond = (steps - lastSteps) / (time - lastTime);
@@ -110,21 +110,20 @@ function updateStatus() {
             stepsPerSecondList.shift();
         }
         let avgstepsPerSecond = Math.round(stepsPerSecondList.reduce((a, b) => a + b, 0) / stepsPerSecondList.length);
-        stepsPerSecondStatus.innerHTML = "Passos/s: " + avgstepsPerSecond;
+        stepsPerSecondStatus.innerHTML = "Steps/s: " + avgstepsPerSecond;
     }
     if (getSnakeSize() < gridSize * gridSize - 1)
-        timeStatus.innerHTML = "Tempo: " + Math.round(time) + "s";
+        timeStatus.innerHTML = "Time: " + Math.round(time) + "s";
 }
 //Slider de velocidade
-speedOutput.innerHTML = "Velocidade " + speedSlider.value + "x";
+speedOutput.innerHTML = "Speed " + speedSlider.value + "x";
 speedSlider.oninput = function () {
-    speedOutput.innerHTML =
-        "Velocidade " + this.value + "x";
+    speedOutput.innerHTML = "Speed " + this.value + "x";
 };
 //Slider de tamanho
-sizeOutput.innerHTML = "Tamanho " + sizeSlider.value;
+sizeOutput.innerHTML = "Grid Size " + sizeSlider.value;
 sizeSlider.oninput = function () {
-    sizeOutput.innerHTML = "Tamanho " + this.value;
+    sizeOutput.innerHTML = "Grid Size " + this.value;
 };
 export function getGridSize() {
     return gridSize;
@@ -136,7 +135,7 @@ function updateGridSize() {
     if (gridSize % 2 != 0) {
         gridSize++;
         sizeSlider.value = String(gridSize);
-        sizeOutput.innerHTML = "Tamanho " + gridSize;
+        sizeOutput.innerHTML = "Grid Size " + gridSize;
     }
     if (gridSize != lastGridSize) {
         lastGridSize = gridSize;
@@ -161,5 +160,5 @@ function resizeCanvas() {
     gameBoard.width = size;
     gameBoard.height = size;
 }
-window.addEventListener('load', resizeCanvas);
-window.addEventListener('resize', resizeCanvas);
+window.addEventListener("load", resizeCanvas);
+window.addEventListener("resize", resizeCanvas);

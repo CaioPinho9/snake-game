@@ -11,23 +11,22 @@ import { getInputDirection, updateInput } from "./input.js";
 import { drawFood, resetFood, updateFood } from "./food.js";
 import { updateAuto } from "./automatic.js";
 
-
-const gameBoard = document.getElementById("game-board")! as HTMLCanvasElement
+const gameBoard = document.getElementById("game-board")! as HTMLCanvasElement;
 const canvasContext = gameBoard.getContext("2d")!;
-const restartButton = document.getElementById("button");
-const automatic = document.getElementById("automatic") as HTMLInputElement;
+const restartButton = document.getElementById("button")!;
+const automatic = document.getElementById("automatic")! as HTMLInputElement;
 
-const speedSlider = document.getElementById("speedSlider") as HTMLInputElement;
-const speedOutput = document.getElementById("speedOutput");
+const speedSlider = document.getElementById("speedSlider")! as HTMLInputElement;
+const speedOutput = document.getElementById("speedOutput")!;
 
-const sizeSlider = document.getElementById("sizeSlider") as HTMLInputElement;
-const sizeOutput = document.getElementById("sizeOutput");
+const sizeSlider = document.getElementById("sizeSlider")! as HTMLInputElement;
+const sizeOutput = document.getElementById("sizeOutput")!;
 
 //Estátisticas do jogo
-const sizeStatus = document.getElementById("size");
-const stepsPerSecondtatus = document.getElementById("steps");
-const stepsPerSecondStatus = document.getElementById("stepsPerSecond");
-const timeStatus = document.getElementById("time");
+const sizeStatus = document.getElementById("size")!;
+const stepsPerSecondtatus = document.getElementById("steps")!;
+const stepsPerSecondStatus = document.getElementById("stepsPerSecond")!;
+const timeStatus = document.getElementById("time")!;
 
 let startTime = Date.now();
 
@@ -86,7 +85,7 @@ function startUpdateLoop() {
 }
 
 // Restart button to reset the game
-restartButton!.onclick = function () {
+restartButton.onclick = function () {
   restart();
 };
 
@@ -106,7 +105,12 @@ function update() {
 
 function draw() {
   //A tela é apagada para depois desenhar a cobra e a comida
-  canvasContext.clearRect(0, 0, canvasContext.canvas.width, canvasContext.canvas.height);
+  canvasContext.clearRect(
+    0,
+    0,
+    canvasContext.canvas.width,
+    canvasContext.canvas.height
+  );
 
   drawFood(canvasContext, cellHeight, cellWidth);
   drawSnake(canvasContext, cellHeight, cellWidth);
@@ -128,8 +132,8 @@ function updateStatus() {
     steps++;
   }
   //As estátisticas são alteradas
-  sizeStatus!.innerHTML = "Tamanho: " + getSnakeSize();
-  stepsPerSecondtatus!.innerHTML = "Passos: " + steps;
+  sizeStatus.innerHTML = "Snake Size: " + getSnakeSize();
+  stepsPerSecondtatus.innerHTML = "Steps: " + steps;
 
   let time = (Date.now() - startTime) / 1000;
 
@@ -145,24 +149,23 @@ function updateStatus() {
       stepsPerSecondList.reduce((a, b) => a + b, 0) / stepsPerSecondList.length
     );
 
-    stepsPerSecondStatus!.innerHTML = "Passos/s: " + avgstepsPerSecond;
+    stepsPerSecondStatus.innerHTML = "Steps/s: " + avgstepsPerSecond;
   }
 
   if (getSnakeSize() < gridSize * gridSize - 1)
-    timeStatus!.innerHTML = "Tempo: " + Math.round(time) + "s";
+    timeStatus.innerHTML = "Time: " + Math.round(time) + "s";
 }
 
 //Slider de velocidade
-speedOutput!.innerHTML = "Velocidade " + speedSlider.value + "x";
+speedOutput.innerHTML = "Speed " + speedSlider.value + "x";
 speedSlider.oninput = function () {
-  speedOutput!.innerHTML =
-    "Velocidade " + (this as HTMLInputElement).value + "x";
+  speedOutput.innerHTML = "Speed " + (this as HTMLInputElement).value + "x";
 };
 
 //Slider de tamanho
-sizeOutput!.innerHTML = "Tamanho " + sizeSlider.value;
+sizeOutput.innerHTML = "Grid Size " + sizeSlider.value;
 sizeSlider.oninput = function () {
-  sizeOutput!.innerHTML = "Tamanho " + (this as HTMLInputElement).value;
+  sizeOutput.innerHTML = "Grid Size " + (this as HTMLInputElement).value;
 };
 
 export function getGridSize() {
@@ -177,7 +180,7 @@ function updateGridSize() {
   if (gridSize % 2 != 0) {
     gridSize++;
     sizeSlider.value = String(gridSize);
-    sizeOutput!.innerHTML = "Tamanho " + gridSize;
+    sizeOutput.innerHTML = "Grid Size " + gridSize;
   }
 
   if (gridSize != lastGridSize) {
@@ -191,7 +194,12 @@ function restart() {
   resetSnake();
   resetFood();
 
-  canvasContext.clearRect(0, 0, canvasContext.canvas.width, canvasContext.canvas.height);
+  canvasContext.clearRect(
+    0,
+    0,
+    canvasContext.canvas.width,
+    canvasContext.canvas.height
+  );
   steps = 0;
   stepsPerSecondList = [];
   lastTime = 0;
@@ -207,6 +215,5 @@ function resizeCanvas() {
   gameBoard.height = size;
 }
 
-
-window.addEventListener('load', resizeCanvas);
-window.addEventListener('resize', resizeCanvas);
+window.addEventListener("load", resizeCanvas);
+window.addEventListener("resize", resizeCanvas);
