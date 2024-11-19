@@ -21,13 +21,21 @@ export function updateFood() {
   }
 }
 
-export function drawFood(gameBoard: HTMLElement) {
+export function drawFood(
+  context: CanvasRenderingContext2D,
+  cellHeight: number,
+  cellWidth: number
+) {
   //A comida é desenhada em determinada posição do grid
-  const foodElement = document.createElement("div");
-  foodElement!.style.gridRowStart = food.y.toString();
-  foodElement!.style.gridColumnStart = food.x.toString();
-  foodElement.classList.add("food");
-  gameBoard.appendChild(foodElement);
+  console.log(food);
+
+  context.fillStyle = "red";
+  context.fillRect(
+    food.x * cellWidth,
+    food.y * cellHeight,
+    cellWidth,
+    cellHeight
+  );
 }
 
 function getRandomFoodPosition() {

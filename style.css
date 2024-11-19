@@ -46,11 +46,8 @@ p {
     background-repeat: no-repeat;
     background-size: 75%;
     background-position: center;
-    height: 67vmin;
-    width: 67vmin;
     margin-top: 10px;
     margin-bottom: 0px;
-    display: grid;
     border: 10px solid #0073ff;
     border-radius: 10px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.35);
