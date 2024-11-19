@@ -27,8 +27,6 @@ export function drawFood(
   cellWidth: number
 ) {
   //A comida é desenhada em determinada posição do grid
-  console.log(food);
-
   context.fillStyle = "red";
   context.fillRect(
     food.x * cellWidth,

@@ -107,7 +107,6 @@ function update() {
 function draw() {
   //A tela é apagada para depois desenhar a cobra e a comida
   canvasContext.clearRect(0, 0, canvasContext.canvas.width, canvasContext.canvas.height);
-  console.log(cellHeight, cellWidth);
 
   drawFood(canvasContext, cellHeight, cellWidth);
   drawSnake(canvasContext, cellHeight, cellWidth);
@@ -202,22 +201,12 @@ function restart() {
 }
 
 function resizeCanvas() {
-  // Get the canvas's CSS size
-  const computedStyle = getComputedStyle(gameBoard);
-  const cssWidth = parseFloat(computedStyle.width);
-  const cssHeight = parseFloat(computedStyle.height);
-
-  // Scale the canvas resolution to match its CSS size
-  const scale = window.devicePixelRatio; // Account for high-DPI screens
-  gameBoard.width = Math.floor(cssWidth * scale);
-  gameBoard.height = Math.floor(cssHeight * scale);
-
-  // Adjust the canvas style to maintain responsiveness
-  gameBoard.style.width = cssWidth + "px";
-  gameBoard.style.height = cssHeight + "px";
-
-  // Adjust the drawing context for the new resolution
-  canvasContext.scale(scale, scale);
+  const parent = gameBoard.parentElement!;
+  const size = Math.min(parent.offsetWidth, parent.offsetHeight); // Maintain square aspect ratio
+  gameBoard.width = size;
+  gameBoard.height = size;
 }
 
-window.addEventListener("resize", () => resizeCanvas());
+
+window.addEventListener('load', resizeCanvas);
+window.addEventListener('resize', resizeCanvas);
