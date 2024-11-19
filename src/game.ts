@@ -11,7 +11,9 @@ import { getInputDirection, updateInput } from "./input.js";
 import { drawFood, resetFood, updateFood } from "./food.js";
 import { updateAuto } from "./automatic.js";
 
-const gameBoard = document.getElementById("game-board");
+
+const gameBoard = document.getElementById("game-board")! as HTMLCanvasElement
+const canvasContext = gameBoard.getContext("2d")!;
 const restartButton = document.getElementById("button");
 const automatic = document.getElementById("automatic") as HTMLInputElement;
 
@@ -40,6 +42,9 @@ let lastGridSize = 0;
 let stepsPerSecondList: number[] = [];
 var steps = 0;
 let gridSize: number = Number(sizeSlider.value);
+let cellWidth: number = canvasContext.canvas.width / gridSize;
+let cellHeight: number = canvasContext.canvas.height / gridSize;
+
 let speed: number = Number(speedSlider.value);
 
 resetSnake();
@@ -101,9 +106,10 @@ function update() {
 
 function draw() {
   //A tela é apagada para depois desenhar a cobra e a comida
-  gameBoard!.innerHTML = "";
-  drawFood(gameBoard!);
-  drawSnake(gameBoard!);
+  canvasContext.clearRect(0, 0, canvasContext.canvas.width, canvasContext.canvas.height);
+
+  drawFood(canvasContext, cellHeight, cellWidth);
+  drawSnake(canvasContext, cellHeight, cellWidth);
 }
 
 function checkDeath() {
@@ -165,6 +171,8 @@ export function getGridSize() {
 
 function updateGridSize() {
   gridSize = Number(sizeSlider.value);
+  cellWidth = canvasContext.canvas.width / gridSize;
+  cellHeight = canvasContext.canvas.height / gridSize;
 
   if (gridSize % 2 != 0) {
     gridSize++;
@@ -174,8 +182,6 @@ function updateGridSize() {
 
   if (gridSize != lastGridSize) {
     lastGridSize = gridSize;
-    gameBoard!.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
-    gameBoard!.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
     restart();
   }
 }
@@ -184,7 +190,8 @@ function restart() {
   //Recarregar página ao resetar o jogo
   resetSnake();
   resetFood();
-  gameBoard!.innerHTML = "";
+
+  canvasContext.clearRect(0, 0, canvasContext.canvas.width, canvasContext.canvas.height);
   steps = 0;
   stepsPerSecondList = [];
   lastTime = 0;
@@ -192,3 +199,14 @@ function restart() {
   gameOver = false;
   startTime = Date.now();
 }
+
+function resizeCanvas() {
+  const parent = gameBoard.parentElement!;
+  const size = Math.min(parent.offsetWidth, parent.offsetHeight); // Maintain square aspect ratio
+  gameBoard.width = size;
+  gameBoard.height = size;
+}
+
+
+window.addEventListener('load', resizeCanvas);
+window.addEventListener('resize', resizeCanvas);

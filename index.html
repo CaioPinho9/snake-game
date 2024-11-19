@@ -2,7 +2,6 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="Perfil-Icone.ico" type="image/x-icom" />
     <title>Snake Game</title>
@@ -10,20 +9,18 @@
     <script src="dist/game.js" defer type="module"></script>
   </head>
   <body>
-    <div id="centralizar">
-      <div id="modo">
-        <p>Manual</p>
-        <label class="switch">
-          <input id="automatic" type="checkbox" />
-          <span class="slider round"></span>
-        </label>
-        <p>Automatico</p>
-      </div>
-
-      <div style="display: flex; justify-content: space-between">
-        <div id="sizeBoard" style="width: 48%">
-          <p id="sizeOutput">Tamanho</p>
-          <div class="slidecontainer">
+    <div id="game-container">
+      <div id="controls">
+        <div id="mode-switch">
+          <label class="switch">
+            <input id="automatic" type="checkbox" title="Automático" />
+            <span class="slider round"></span>
+          </label>
+          <p>Automático</p>
+        </div>
+        <div id="sliders">
+          <div class="slider-group">
+            <p id="sizeOutput">Tamanho</p>
             <input
               type="range"
               min="2"
@@ -31,12 +28,11 @@
               value="20"
               class="sliderRange"
               id="sizeSlider"
+              title="Tamanho"
             />
           </div>
-        </div>
-        <div id="speed" style="width: 48%">
-          <p id="speedOutput">Velocidade</p>
-          <div class="slidecontainer">
+          <div class="slider-group">
+            <p id="speedOutput">Velocidade</p>
             <input
               type="range"
               min="1"
@@ -44,23 +40,25 @@
               value="5"
               class="sliderRange"
               id="speedSlider"
+              title="Velocidade"
             />
           </div>
         </div>
       </div>
-
-      <div id="game-board"></div>
-
-      <div id="status">
-        <div style="text-align: left">
-          <p id="size">Tamanho:</p>
-          <p id="time">Tempo:</p>
+      <div id="game-board-wrapper">
+        <div id="background-overlay"></div>
+        <canvas id="game-board"></canvas>
+      </div>
+      <div id="game-status">
+        <div class="status-group">
+          <p id="size">Tamanho: 1</p>
+          <p id="time">Tempo: 0s</p>
         </div>
-        <button id="button" class="button">Restart</button>
-        <div style="text-align: left">
-          <p id="steps">Passos:</p>
-          <p id="stepsPerSecond">Passos/s:</p>
+        <div class="status-group">
+          <p id="steps">Passos: 0</p>
+          <p id="stepsPerSecond">Passos/s: 0</p>
         </div>
+        <button id="button" class="button" type="button">Restart</button>
       </div>
     </div>
   </body>
