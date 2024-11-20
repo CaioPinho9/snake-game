@@ -11,11 +11,11 @@ body {
 
 #game-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  width: 90%;
-  max-width: 800px;
+  margin: 10px;
   position: relative;
+  width: 80%;
 }
 
 #controls {
@@ -23,9 +23,11 @@ body {
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-  width: 100%;
-  max-width: 500px;
   margin: 0;
+  background-color: rgb(22, 35, 70);
+  padding: 10px;
+  border-radius: 10px;
+  width: 25%;
 }
 
 #mode-switch {
@@ -84,9 +86,9 @@ input:checked + .slider:before {
 
 #sliders {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   gap: 20px;
-  width: 100%;
 }
 
 .sliderRange {
@@ -122,10 +124,9 @@ input:checked + .slider:before {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 600px;
+  width: 50%;
   aspect-ratio: 1; /* Keeps the canvas square */
-  margin: 20px 0;
+  margin: 40px;
   position: relative; /* Allows stacking */
 }
 
@@ -157,13 +158,16 @@ canvas {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  width: 100%;
   margin: 0;
+  background-color: rgb(22, 35, 70);
+  padding: 10px;
+  border-radius: 10px;
+  width: 25%;
 }
-
 .status-group {
   display: flex;
   gap: 20px;
+  width: max-content;
   margin: 0;
 }
 
